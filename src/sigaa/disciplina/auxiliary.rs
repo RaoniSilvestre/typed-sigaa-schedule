@@ -3,6 +3,10 @@ use std::collections::BTreeSet;
 use std::fmt::format;
 use std::ops::Deref;
 
+use crate::sigaa::time::Dia;
+use crate::sigaa::time::Horario;
+use crate::sigaa::time::Turno;
+
 use super::Disciplina;
 use super::DisciplinaErrors;
 use super::SigaaTime;
@@ -23,19 +27,28 @@ impl Disciplina {
 
         abreviação
     }
-
     pub fn generate_horario_display(&self) -> String {
         let mut output = String::new();
-        for elem in self.sigaa_time.iter() {
-            output = format!("{}{}", output, elem.dia)
-        }
-
-        if let Some(val) = self.sigaa_time.first() {
-            output = format!("{}{}", output, val.turno);
-        }
+        let mut dias: BTreeSet<Dia> = BTreeSet::new();
+        let mut turnos: BTreeSet<Turno> = BTreeSet::new();
+        let mut horarios: BTreeSet<Horario> = BTreeSet::new();
 
         for elem in self.sigaa_time.iter() {
-            output = format!("{}{}", output, elem.horario);
+            dias.insert(elem.dia);
+            turnos.insert(elem.turno);
+            horarios.insert(elem.horario);
+        }
+
+        for dia in dias.iter() {
+            output = format!("{}{}", output, dia);
+        }
+
+        for turno in turnos.iter() {
+            output = format!("{}{}", output, turno);
+        }
+
+        for horario in horarios.iter() {
+            output = format!("{}{}", output, horario);
         }
 
         output

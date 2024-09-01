@@ -35,3 +35,14 @@ impl TryFrom<&str> for Horario {
         }
     }
 }
+
+impl Into<usize> for Horario {
+    fn into(self) -> usize {
+        match self {
+            Horario::Primeiro => 0,
+            Horario::Segundo => 1,
+            Horario::Terceiro => 2,
+        }
+    }
+    // add code here
+}

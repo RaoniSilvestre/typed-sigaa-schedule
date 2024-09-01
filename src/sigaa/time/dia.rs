@@ -31,6 +31,19 @@ impl TryFrom<usize> for Dia {
     }
 }
 
+impl Into<usize> for Dia {
+    fn into(self) -> usize {
+        match self {
+            Dia::Segunda => 0,
+            Dia::Terça => 1,
+            Dia::Quarta => 2,
+            Dia::Quinta => 3,
+            Dia::Sexta => 4,
+            Dia::Sabado => 5,
+        }
+    }
+}
+
 impl TryFrom<&str> for Dia {
     type Error = SigaaTimeErrors;
     fn try_from(value: &str) -> Result<Self, Self::Error> {

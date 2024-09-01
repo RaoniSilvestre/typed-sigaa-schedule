@@ -1,4 +1,4 @@
-#[derive(Debug, Clone, Copy, PartialEq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum Dia {
     Segunda,
     Terça,
@@ -15,14 +15,14 @@ pub enum Turno {
     Noite,
 }
 
-#[derive(Debug, Clone, Copy, PartialEq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum Horario {
     Primeiro,
     Segundo,
     Terceiro,
 }
 
-#[derive(Debug, Clone, Copy, PartialEq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub struct SigaaTime {
     dia: Dia,
     turno: Turno,

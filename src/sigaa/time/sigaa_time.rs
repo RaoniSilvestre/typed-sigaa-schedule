@@ -48,6 +48,39 @@ impl TryFrom<&str> for SigaaTime {
     }
 }
 
+impl PartialOrd for SigaaTime {
+    fn partial_cmp(&self, other: &Self) -> Option<std::cmp::Ordering> {
+        let this_dia_usized: usize = self.dia.into();
+        let other_dia_usized: usize = other.dia.into();
+
+        Some(this_dia_usized.cmp(&other_dia_usized))
+    }
+}
+
+impl Ord for SigaaTime {
+    fn cmp(&self, other: &Self) -> std::cmp::Ordering {
+        let this_dia_usized: usize = self.dia.into();
+        let other_dia_usized: usize = other.dia.into();
+
+        if this_dia_usized != other_dia_usized {
+            return this_dia_usized.cmp(&other_dia_usized);
+        }
+
+        let this_turno_usized: usize = self.turno.into();
+        let other_turno_usized: usize = other.turno.into();
+
+        if this_turno_usized != other_turno_usized {
+            return this_turno_usized.cmp(&other_turno_usized);
+        }
+
+        let this_horario_usized: usize = self.horario.into();
+        let other_horario_usized: usize = other.horario.into();
+
+        this_horario_usized.cmp(&other_horario_usized)
+    }
+}
+
+
 impl Display for SigaaTime {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(f, "{}{}{}", self.dia, self.turno, self.horario)

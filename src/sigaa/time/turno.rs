@@ -23,3 +23,13 @@ impl TryFrom<&str> for Turno {
         }
     }
 }
+
+impl Into<usize> for Turno {
+    fn into(self) -> usize {
+        match self {
+            Self::Manhã => 0,
+            Self::Tarde => 1,
+            Self::Noite => 2,
+        }
+    }
+}

@@ -1,5 +1,7 @@
 use std::fmt::Display;
 
+use regex::Regex;
+
 use super::{Dia, Horario, SigaaTime, SigaaTimeErrors, Turno};
 
 impl SigaaTime {
@@ -25,6 +27,24 @@ impl SigaaTime {
         let horario: Horario = horario_str.try_into()?;
 
         Ok(SigaaTime::new(dia, turno, horario)?)
+    }
+}
+
+impl TryFrom<&str> for SigaaTime {
+    type Error = SigaaTimeErrors;
+
+    fn try_from(value: &str) -> Result<SigaaTime, SigaaTimeErrors> {
+        let regex = Regex::new(r"^(\d{1,2})([MTN])(\d{2,4})$").unwrap();
+
+        if let Some(capturas) = regex.captures(value) {
+            let dias = capturas[1].to_string();
+            let turnos = capturas[2].to_string();
+            let horarios = capturas[3].to_string();
+
+            return Ok(SigaaTime::new_from_strings(&dias, &turnos, &horarios)?);
+        };
+
+        Err(SigaaTimeErrors::InvalidStringToSigaaTime)
     }
 }
 

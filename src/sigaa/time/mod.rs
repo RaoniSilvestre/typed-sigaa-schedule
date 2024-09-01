@@ -36,6 +36,7 @@ pub enum SigaaTimeErrors {
     InvalidStringToDay,
     InvalidUsizeToHorario,
     InvalidStringToTurno,
+    InvalidStringToSigaaTime,
     InvalidStringToHorario,
 }
 

@@ -1,4 +1,5 @@
 use std::collections::BTreeSet;
+use std::fmt::Display;
 
 use super::SigaaTime;
 use super::{Disciplina, DisciplinaErrors};
@@ -38,7 +39,21 @@ impl Disciplina {
     }
 
     pub fn add_time(&mut self, new_time: SigaaTime) -> Result<(), DisciplinaErrors> {
-        self.sigaa_time.insert(new_time);
-        Ok(())
+        match self.sigaa_time.insert(new_time) {
+            true => Ok(()),
+            false => Err(DisciplinaErrors::TimeAlreadyInserted),
+        }
+    }
+}
+
+impl Display for Disciplina {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(
+            f,
+            "{} - {} - {}",
+            self.nome,
+            self.abreviacao,
+            self.generate_horario_display()
+        )
     }
 }

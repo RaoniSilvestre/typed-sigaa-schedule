@@ -1,5 +1,6 @@
 use core::panic;
 use std::collections::BTreeSet;
+use std::fmt::format;
 use std::ops::Deref;
 
 use super::Disciplina;
@@ -21,6 +22,23 @@ impl Disciplina {
         }
 
         abreviação
+    }
+
+    pub fn generate_horario_display(&self) -> String {
+        let mut output = String::new();
+        for elem in self.sigaa_time.iter() {
+            output = format!("{}{}", output, elem.dia)
+        }
+
+        if let Some(val) = self.sigaa_time.first() {
+            output = format!("{}{}", output, val.turno);
+        }
+
+        for elem in self.sigaa_time.iter() {
+            output = format!("{}{}", output, elem.horario);
+        }
+
+        output
     }
     pub fn is_formatted(time: String) -> bool {
         let regex = Regex::new(r"^(\d{1,3})([MTN])(\d{2,4})$").unwrap();
@@ -111,6 +129,7 @@ impl Disciplina {
 
 #[cfg(test)]
 mod tests {
+
     use crate::sigaa::time::SigaaTime;
 
     use super::Disciplina;
@@ -159,5 +178,14 @@ mod tests {
         if let Some(val) = sigaa_times_iter.next() {
             assert_eq!(*val, sigaa_time_3);
         }
+    }
+
+    #[test]
+    fn should_generate_a_correct_sigaa_time_display() {
+        let disciplina =
+            Disciplina::new_with_time_string("fun mat comp".to_string(), "246T12".to_string())
+                .unwrap();
+
+        assert_eq!(disciplina.generate_horario_display(), "246T12");
     }
 }

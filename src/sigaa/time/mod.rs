@@ -24,9 +24,9 @@ pub enum Horario {
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub struct SigaaTime {
-    dia: Dia,
-    turno: Turno,
-    horario: Horario,
+    pub dia: Dia,
+    pub turno: Turno,
+    pub horario: Horario,
 }
 
 #[derive(Debug)]

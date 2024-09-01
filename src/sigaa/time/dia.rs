@@ -1,7 +1,7 @@
 use std::fmt::Display;
 
-use super::sigaa_time::SigaaTimeErrors;
 use super::Dia;
+use super::SigaaTimeErrors;
 
 impl Display for Dia {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {

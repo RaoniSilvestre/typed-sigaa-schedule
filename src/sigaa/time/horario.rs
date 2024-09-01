@@ -1,6 +1,6 @@
 use std::fmt::Display;
 
-use super::{sigaa_time::SigaaTimeErrors, Horario};
+use super::{Horario, SigaaTimeErrors};
 
 impl Display for Horario {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {

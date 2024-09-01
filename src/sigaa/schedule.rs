@@ -1,4 +1,4 @@
-use super::{Disciplina, Schedule, ScheduleUnity, SigaaTime, Turno};
+use super::{time::Turno, Disciplina, Schedule, ScheduleUnity, SigaaTime};
 
 impl Schedule {
     pub fn new() -> Schedule {
@@ -70,8 +70,8 @@ impl ScheduleUnity {
 #[cfg(test)]
 mod test {
     use crate::sigaa::{
-        sigaa_time::{SigaaTime, SigaaTimeErrors},
-        Dia, Horario, Schedule, ScheduleUnity, Turno,
+        time::{Dia, Horario, SigaaTimeErrors, Turno},
+        Schedule, ScheduleUnity, SigaaTime,
     };
 
     #[test]

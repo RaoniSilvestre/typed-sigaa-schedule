@@ -1,6 +1,6 @@
 use std::fmt::Display;
 
-use super::{sigaa_time::SigaaTimeErrors, Turno};
+use super::{SigaaTimeErrors, Turno};
 
 impl Display for Turno {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {

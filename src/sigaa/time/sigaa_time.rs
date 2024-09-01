@@ -1,23 +1,6 @@
 use std::fmt::Display;
 
-use super::{Dia, Horario, Turno};
-
-#[derive(Debug, Clone, Copy, PartialEq)]
-pub struct SigaaTime {
-    dia: Dia,
-    turno: Turno,
-    horario: Horario,
-}
-
-#[derive(Debug)]
-pub enum SigaaTimeErrors {
-    TriedToCreateN56,
-    InvalidUsizeToDay,
-    InvalidStringToDay,
-    InvalidUsizeToHorario,
-    InvalidStringToTurno,
-    InvalidStringToHorario,
-}
+use super::{Dia, Horario, SigaaTime, SigaaTimeErrors, Turno};
 
 impl SigaaTime {
     pub fn new(dia: Dia, turno: Turno, horario: Horario) -> Result<SigaaTime, SigaaTimeErrors> {

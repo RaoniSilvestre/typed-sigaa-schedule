@@ -1,36 +1,5 @@
-use sigaa_time::SigaaTime;
-
-#[derive(Debug, Clone, Copy, PartialEq)]
-pub enum Dia {
-    Segunda,
-    Terça,
-    Quarta,
-    Quinta,
-    Sexta,
-    Sabado,
-}
-
-mod dia;
-
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
-pub enum Turno {
-    Manhã,
-    Tarde,
-    Noite,
-}
-
-mod turno;
-
-#[derive(Debug, Clone, Copy, PartialEq)]
-pub enum Horario {
-    Primeiro,
-    Segundo,
-    Terceiro,
-}
-
-mod horario;
-
-mod sigaa_time;
+mod time;
+use time::SigaaTime;
 
 #[derive(Debug, Clone, PartialEq)]
 pub struct Disciplina {

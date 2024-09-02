@@ -4,9 +4,9 @@ use super::SigaaTime;
 
 #[derive(Debug, Clone, PartialEq)]
 pub struct Disciplina {
-    nome: String,
-    abreviacao: String,
-    sigaa_time: BTreeSet<SigaaTime>,
+    pub nome: String,
+    pub abreviacao: String,
+    pub sigaa_time: BTreeSet<SigaaTime>,
 }
 
 #[derive(Debug)]

@@ -1,6 +1,5 @@
 use core::panic;
 use std::collections::BTreeSet;
-use std::fmt::format;
 use std::ops::Deref;
 
 use crate::sigaa::time::Dia;
@@ -195,9 +194,7 @@ mod tests {
 
     #[test]
     fn should_generate_a_correct_sigaa_time_display() {
-        let disciplina =
-            Disciplina::new_with_time_string("fun mat comp".to_string(), "246T12".to_string())
-                .unwrap();
+        let disciplina = Disciplina::new("fun mat comp".to_string(), "246T12".to_string()).unwrap();
 
         assert_eq!(disciplina.generate_horario_display(), "246T12");
     }

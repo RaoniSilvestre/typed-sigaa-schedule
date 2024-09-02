@@ -1,4 +1,13 @@
-use super::{time::Turno, Disciplina, Schedule, ScheduleUnity, SigaaTime};
+use std::usize;
+
+use super::{
+    time::{Horario, Turno},
+    Disciplina, Schedule, ScheduleUnity, SigaaTime,
+};
+
+enum ScheduleErrors {
+    DisciplineConflict,
+}
 
 impl Schedule {
     pub fn new() -> Schedule {
@@ -46,6 +55,17 @@ impl Schedule {
 
         Schedule {
             schedule: vector_row,
+        }
+    }
+
+    pub fn search_time(&self, sigaa_time: &SigaaTime) -> ScheduleUnity {
+        let usize_day: usize = sigaa_time.dia.into();
+        let usize_horario: usize = sigaa_time.horario.into();
+
+        match &sigaa_time.turno {
+            Turno::Manhã => self.schedule[usize_horario][usize_day].clone(),
+            Turno::Tarde => self.schedule[usize_horario + 3][usize_day].clone(),
+            Turno::Noite => self.schedule[usize_horario + 6][usize_day].clone(),
         }
     }
 }

@@ -4,15 +4,19 @@ use super::SigaaTime;
 
 #[derive(Debug, Clone, PartialEq)]
 pub struct Disciplina {
-    nome: String,
-    abreviacao: String,
-    sigaa_time: BTreeSet<SigaaTime>,
+    pub nome: String,
+    pub abreviacao: String,
+    pub sigaa_time: BTreeSet<SigaaTime>,
 }
 
 #[derive(Debug)]
 pub enum DisciplinaErrors {
     WrongInputFormat,
     TimeAlreadyInserted,
+    NotFormatted,
+    InputTooBig,
+    InputDiffersFromSix,
+    TurnoNotFounded,
 }
 
 mod auxiliary;

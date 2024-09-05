@@ -10,28 +10,32 @@ pub enum Dia {
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum Turno {
-    Manhã,
-    Tarde,
-    Noite,
+    Manhã(HorarioDiurno),
+    Tarde(HorarioDiurno),
+    Noite(HorarioNoturno),
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
-pub enum Horario {
+pub enum HorarioDiurno {
     Primeiro,
     Segundo,
     Terceiro,
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum HorarioNoturno {
+    Primeiro,
+    Segundo,
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub struct SigaaTime {
     pub dia: Dia,
     pub turno: Turno,
-    pub horario: Horario,
 }
 
-#[derive(Debug)]
+#[derive(Debug, PartialEq)]
 pub enum SigaaTimeErrors {
-    TriedToCreateN56,
     InvalidUsizeToDay,
     InvalidStringToDay,
     InvalidUsizeToHorario,
@@ -41,6 +45,5 @@ pub enum SigaaTimeErrors {
 }
 
 mod dia;
-mod horario;
 mod sigaa_time;
 mod turno;

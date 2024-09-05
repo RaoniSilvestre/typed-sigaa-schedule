@@ -43,6 +43,6 @@ mod schedule_tests {
         let disciplina_1 =
             Disciplina::new_stringify("Fundamentos mamáticos da computação I", "246M12").unwrap();
 
-        assert_eq!(schedule.insert(disciplina_1.clone()), Ok(()));
+        assert_eq!(schedule.insert(disciplina_1), Ok(()));
     }
 }

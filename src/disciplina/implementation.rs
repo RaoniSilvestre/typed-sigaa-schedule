@@ -1,3 +1,4 @@
+use super::auxiliary::*;
 use std::collections::BTreeSet;
 use std::fmt::Display;
 
@@ -8,21 +9,21 @@ impl Disciplina {
     pub fn new(nome: &str, sigaa_time: BTreeSet<SigaaTime>) -> Disciplina {
         Disciplina {
             sigaa_time,
-            abreviacao: Self::generate_abreviação(nome),
+            abreviacao: generate_abreviação(nome),
             nome: nome.to_string(),
         }
     }
 
     pub fn new_stringify(nome: &str, new_time: &str) -> Result<Disciplina, DisciplinaErrors> {
-        if !Self::is_formatted(new_time) {
+        if !is_formatted(new_time) {
             return Err(DisciplinaErrors::NotFormatted);
         }
 
-        let new_times: BTreeSet<SigaaTime> = Self::valid_string_to_vec_sigaa_times(new_time);
+        let new_times: BTreeSet<SigaaTime> = valid_string_to_vec_sigaa_times(new_time);
 
         Ok(Disciplina {
             sigaa_time: new_times,
-            abreviacao: Self::generate_abreviação(nome),
+            abreviacao: generate_abreviação(nome),
             nome: nome.to_string(),
         })
     }
@@ -42,7 +43,7 @@ impl Display for Disciplina {
             "{} - {} - {}",
             self.nome,
             self.abreviacao,
-            self.generate_horario_display()
+            generate_horario_display(&self)
         )
     }
 }

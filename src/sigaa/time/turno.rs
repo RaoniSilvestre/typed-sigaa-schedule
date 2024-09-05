@@ -88,3 +88,21 @@ impl Into<usize> for Turno {
         }
     }
 }
+
+impl PartialOrd for Turno {
+    fn partial_cmp(&self, other: &Self) -> Option<std::cmp::Ordering> {
+        let self_usize: usize = (*self).into();
+        let other_usize: usize = (*other).into();
+
+        Some(self_usize.cmp(&other_usize))
+    }
+}
+
+impl Ord for Turno {
+    fn cmp(&self, other: &Self) -> std::cmp::Ordering {
+        let self_usize: usize = (*self).into();
+        let other_usize: usize = (*other).into();
+
+        self_usize.cmp(&other_usize)
+    }
+}

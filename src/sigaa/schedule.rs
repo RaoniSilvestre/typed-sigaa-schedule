@@ -1,4 +1,4 @@
-use super::{time::Turno, Disciplina, Schedule, ScheduleError, ScheduleUnity, SigaaTime};
+use super::{Disciplina, DisciplineWasFound, Schedule, ScheduleError, ScheduleUnity, SigaaTime};
 
 impl Schedule {
     pub fn new() -> Schedule {
@@ -25,37 +25,47 @@ impl Schedule {
             .and_then(|row| row.get_mut(dia_index))
     }
 
-    pub fn insert(&mut self, disciplina: Disciplina) -> Result<(), ScheduleError> {
+    pub fn verify_availability(&self, disciplina: &Disciplina) -> DisciplineWasFound {
         for &sigaa_time in &disciplina.sigaa_time {
             let dia_index: usize = sigaa_time.dia.into();
             let turno_index: usize = sigaa_time.turno.into();
 
-            if let Some(schedule_unity) = self.get_mut(turno_index, dia_index) {
+            if let Some(schedule_unity) = self.get(turno_index, dia_index) {
                 if let Some(disciplina_ocupada) = &schedule_unity.disciplina {
-                    return Err(ScheduleError::ConflictingDisciplines(
-                        disciplina,
-                        disciplina_ocupada.clone(),
-                    ));
+                    return DisciplineWasFound::DisciplineFound(disciplina_ocupada.clone());
                 }
             }
         }
 
-        for &sigaa_time in &disciplina.sigaa_time {
-            let dia_index: usize = sigaa_time.dia.into();
-            let turno_index: usize = sigaa_time.turno.into();
+        DisciplineWasFound::DisciplineNotFound
+    }
 
-            match self.get_mut(turno_index, dia_index) {
-                Some(schedule_unity) => schedule_unity.disciplina = Some(disciplina.clone()),
-                None => {
-                    return Err(ScheduleError::TimeNotFound(SigaaTime::new(
-                        dia_index.try_into().unwrap(),
-                        turno_index.try_into().unwrap(),
-                    )))
+    pub fn insert(&mut self, disciplina: Disciplina) -> Result<(), ScheduleError> {
+        match self.verify_availability(&disciplina) {
+            DisciplineWasFound::DisciplineNotFound => {
+                for &sigaa_time in &disciplina.sigaa_time {
+                    let dia_index: usize = sigaa_time.dia.into();
+                    let turno_index: usize = sigaa_time.turno.into();
+
+                    match self.get_mut(turno_index, dia_index) {
+                        Some(schedule_unity) => {
+                            schedule_unity.disciplina = Some(disciplina.clone())
+                        }
+                        None => {
+                            return Err(ScheduleError::TimeNotFound(SigaaTime::new(
+                                dia_index.try_into().unwrap(),
+                                turno_index.try_into().unwrap(),
+                            )))
+                        }
+                    }
                 }
-            }
-        }
 
-        Ok(())
+                Ok(())
+            }
+            DisciplineWasFound::DisciplineFound(found_discipline) => Err(
+                ScheduleError::ConflictingDisciplines(found_discipline, disciplina),
+            ),
+        }
     }
 
     pub fn get(&self, row: usize, col: usize) -> Option<&ScheduleUnity> {
@@ -87,6 +97,7 @@ impl ScheduleUnity {
 #[cfg(test)]
 mod test {
     use crate::sigaa::{
+        disciplina::Disciplina,
         time::{Dia, HorarioDiurno, SigaaTimeErrors, Turno},
         Schedule, ScheduleUnity, SigaaTime,
     };
@@ -120,14 +131,9 @@ mod test {
 
         Ok(())
     }
-}
-
-#[cfg(test)]
-mod test_schedule {
-    use super::*;
 
     #[test]
-    fn test_add_disciplina_success() {
+    fn insert_into_schedule_should_return_ok() {
         let mut schedule = Schedule::new();
 
         let disciplina_1 =

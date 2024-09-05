@@ -19,4 +19,9 @@ pub enum ScheduleError {
     SigaaTimeErrors(SigaaTimeErrors),
 }
 
+pub enum DisciplineWasFound {
+    DisciplineFound(Disciplina),
+    DisciplineNotFound,
+}
+
 mod schedule;

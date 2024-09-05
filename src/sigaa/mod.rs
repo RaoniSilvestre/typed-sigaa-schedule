@@ -1,6 +1,6 @@
 mod time;
 use disciplina::Disciplina;
-use time::SigaaTime;
+use time::{SigaaTime, SigaaTimeErrors};
 
 mod disciplina;
 
@@ -10,8 +10,13 @@ pub struct ScheduleUnity {
     disciplina: Option<Disciplina>,
 }
 
-pub struct Schedule {
-    schedule: Vec<Vec<ScheduleUnity>>,
+pub struct Schedule(Vec<Vec<ScheduleUnity>>);
+
+#[derive(Debug, PartialEq)]
+pub enum ScheduleError {
+    ConflictingDisciplines(Disciplina, Disciplina),
+    TimeNotFound(SigaaTime),
+    SigaaTimeErrors(SigaaTimeErrors),
 }
 
 mod schedule;

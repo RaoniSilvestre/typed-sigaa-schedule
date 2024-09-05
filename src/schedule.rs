@@ -96,7 +96,7 @@ impl ScheduleUnity {
 
 #[cfg(test)]
 mod test {
-    use crate::sigaa::{
+    use crate::{
         disciplina::Disciplina,
         time::{Dia, HorarioDiurno, SigaaTimeErrors, Turno},
         Schedule, ScheduleUnity, SigaaTime,

@@ -3,7 +3,6 @@ use std::collections::BTreeSet;
 use std::ops::Deref;
 
 use crate::sigaa::time::Dia;
-use crate::sigaa::time::Horario;
 use crate::sigaa::time::Turno;
 
 use super::Disciplina;
@@ -30,7 +29,6 @@ impl Disciplina {
         let mut output = String::new();
         let mut dias: BTreeSet<Dia> = BTreeSet::new();
         let mut turnos: BTreeSet<Turno> = BTreeSet::new();
-        let mut horarios: BTreeSet<Horario> = BTreeSet::new();
 
         for elem in self.sigaa_time.iter() {
             dias.insert(elem.dia);
@@ -41,11 +39,21 @@ impl Disciplina {
             output = format!("{}{}", output, dia);
         }
 
-        for turno in turnos.iter() {
-            output = format!("{}{}", output, turno);
+        for (i, turno) in turnos.iter().enumerate() {
+            match i {
+                0 => output = format!("{}{}", output, turno),
+                _ => {
+                    output = format!(
+                        "{}{}",
+                        output,
+                        <Turno as Into<String>>::into(*turno)[1..].to_string()
+                    )
+                }
+            }
         }
         output
     }
+
     pub fn is_formatted(time: &str) -> bool {
         let regex = Regex::new(r"^(\d{1,5})([MTN])(\d{2,6})$").unwrap();
 
@@ -207,5 +215,15 @@ mod tests {
     fn should_generate_a_correct_sigaa_time_display() {
         let disciplina = Disciplina::new_stringify("fun mat comp", "246T12").unwrap();
         assert_eq!(disciplina.generate_horario_display(), "246T12");
+    }
+
+    #[test]
+    fn should_generate_a_correct_horario_display() {
+        let dis =
+            Disciplina::new_stringify("Fundamentos Matemáticos da Computação", "246T12").unwrap();
+        let dis_2 = Disciplina::new_stringify("a", "24M1234").unwrap();
+
+        assert_eq!(dis.generate_horario_display(), "246T12");
+        assert_eq!(dis_2.generate_horario_display(), "24M1234");
     }
 }

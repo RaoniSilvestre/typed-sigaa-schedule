@@ -1,4 +1,4 @@
-use super::{Disciplina, Schedule, ScheduleError, ScheduleUnity, SigaaTime};
+use super::{time::Turno, Disciplina, Schedule, ScheduleError, ScheduleUnity, SigaaTime};
 
 impl Schedule {
     pub fn new() -> Schedule {

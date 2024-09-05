@@ -4,15 +4,15 @@ Implementação da estrutura de dados do horário do sigaa em rust, onde tudo é
 
 ## Principais implementações
 
-- Schedule
+- **Schedule**
   é pra ser todo seu horário no sigaa: De segunda a sábado, todos os turnos que você ta tendo aula e tudo mais.
 
-- SigaaTime
+- **SigaaTime**
   é uma unidade de horário, ex:
 
 ```
 3T56
 ```
 
-- Disciplina
+- **Disciplina**
   O nome diz tudo

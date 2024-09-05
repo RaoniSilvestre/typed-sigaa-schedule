@@ -2,6 +2,10 @@ use core::panic;
 use std::collections::BTreeSet;
 use std::ops::Deref;
 
+use crate::sigaa::time::Dia;
+use crate::sigaa::time::Horario;
+use crate::sigaa::time::Turno;
+
 use super::Disciplina;
 use super::DisciplinaErrors;
 use super::SigaaTime;
@@ -22,17 +26,24 @@ impl Disciplina {
 
         abreviação
     }
-
     pub fn generate_horario_display(&self) -> String {
         let mut output = String::new();
+        let mut dias: BTreeSet<Dia> = BTreeSet::new();
+        let mut turnos: BTreeSet<Turno> = BTreeSet::new();
+        let mut horarios: BTreeSet<Horario> = BTreeSet::new();
+
         for elem in self.sigaa_time.iter() {
-            output = format!("{}{}", output, elem.dia)
+            dias.insert(elem.dia);
+            turnos.insert(elem.turno);
         }
 
-        if let Some(val) = self.sigaa_time.first() {
-            output = format!("{}{}", output, val.turno);
+        for dia in dias.iter() {
+            output = format!("{}{}", output, dia);
         }
 
+        for turno in turnos.iter() {
+            output = format!("{}{}", output, turno);
+        }
         output
     }
     pub fn is_formatted(time: &str) -> bool {

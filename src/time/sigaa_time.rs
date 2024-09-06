@@ -19,6 +19,7 @@ impl SigaaTime {
     /// # Exemplo
     ///
     /// ```
+    /// use sigaa_sched::time::{SigaaTime, HorarioDiurno, Turno, Dia};
     /// let sigaa_time = SigaaTime::new(Dia::Segunda, Turno::Manhã(HorarioDiurno::Primeiro));
     /// ```
     pub fn new(dia: Dia, turno: Turno) -> SigaaTime {
@@ -42,6 +43,8 @@ impl SigaaTime {
     /// # Exemplo
     ///
     /// ```
+    /// use sigaa_sched::time::SigaaTime;
+    ///
     /// match SigaaTime::new_from_strings("2", "M12") {
     ///     Ok(sigaa_time) => println!("Horário criado com sucesso: {:?}", sigaa_time),
     ///     Err(e) => println!("Erro ao criar horário: {:?}", e),
@@ -59,7 +62,7 @@ impl TryFrom<&str> for SigaaTime {
     type Error = SigaaTimeErrors;
 
     fn try_from(value: &str) -> Result<SigaaTime, SigaaTimeErrors> {
-        let regex = Regex::new(r"^(\d{1,2})([MTN])(\d{2,4})$").unwrap();
+        let regex = Regex::new(r"^(\d{1,5})([MTN])(\d{2,6})$").unwrap();
 
         match regex.captures(value) {
             Some(capturas) => {

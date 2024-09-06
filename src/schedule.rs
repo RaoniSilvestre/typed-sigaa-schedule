@@ -9,6 +9,7 @@ impl Schedule {
     /// # Exemplo
     ///
     /// ```
+    /// use sigaa_sched::Schedule;
     /// let schedule = Schedule::new();
     /// ```
     pub fn new() -> Schedule {
@@ -122,6 +123,14 @@ impl Schedule {
     /// Retorna uma referência para o `ScheduleUnity` se o índice for válido, caso contrário, retorna `None`.
     pub fn get(&self, row: usize, col: usize) -> Option<&ScheduleUnity> {
         self.0.get(row)?.get(col)
+    }
+
+    pub fn get_from_str(&self, input: &str) -> Option<&ScheduleUnity> {
+        let sigaa_time_str: SigaaTime = input.try_into().unwrap();
+
+        let (turno, dia): (usize, usize) = (sigaa_time_str.turno.into(), sigaa_time_str.dia.into());
+
+        self.0.get(turno)?.get(dia)
     }
 
     /// Obtém as dimensões da matriz de cronograma.

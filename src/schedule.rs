@@ -213,6 +213,9 @@ mod test {
         assert_eq!(schedule.get(0, 0), Some(&schedule_unity));
         assert_eq!(schedule.get(0, 1), Some(&schedule_unity_2));
 
+        assert_eq!(schedule.get_from_str("2M12"), Some(&schedule_unity));
+        assert_eq!(schedule.get_from_str("3M12"), Some(&schedule_unity_2));
+
         Ok(())
     }
 
@@ -224,5 +227,10 @@ mod test {
             Disciplina::new_stringify("Fundamentos mamáticos da computação I", "246M12").unwrap();
 
         assert_eq!(schedule.insert(disciplina_1.clone()), Ok(()));
+
+        let schedule_unity = schedule.get_from_str("2M12").unwrap();
+
+        assert_eq!(schedule_unity.horario.to_string(), "2M12");
+        assert_eq!(schedule_unity.disciplina, Some(disciplina_1));
     }
 }

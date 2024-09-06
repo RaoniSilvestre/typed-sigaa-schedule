@@ -16,7 +16,7 @@ impl Disciplina {
 
     pub fn new_stringify(nome: &str, new_time: &str) -> Result<Disciplina, DisciplinaErrors> {
         if !is_formatted(new_time) {
-            return Err(DisciplinaErrors::NotFormatted);
+            return Err(DisciplinaErrors::TimeNotFormatted);
         }
 
         let new_times: BTreeSet<SigaaTime> = valid_string_to_vec_sigaa_times(new_time);

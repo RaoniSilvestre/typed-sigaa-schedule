@@ -6,9 +6,13 @@ use crate::time::Dia;
 use crate::time::Turno;
 
 use super::Disciplina;
-use super::DisciplinaErrors;
 use super::SigaaTime;
 use regex::Regex;
+
+#[derive(Debug)]
+enum AuxErrors {
+    TurnoNotFound,
+}
 
 pub fn generate_abreviação(nome: &str) -> String {
     let mut abreviação = String::new();
@@ -128,7 +132,7 @@ fn extract_day(texto: &str) -> &str {
 
     match finder {
         Some(pos) => texto.split_at(pos).0,
-        None => panic!("{:?}: {}", DisciplinaErrors::TurnoNotFounded, texto),
+        None => panic!("{:?}: {}", AuxErrors::TurnoNotFound, texto),
     }
 }
 

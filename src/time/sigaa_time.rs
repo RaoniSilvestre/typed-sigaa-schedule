@@ -5,10 +5,48 @@ use regex::Regex;
 use super::{Dia, SigaaTime, SigaaTimeErrors, Turno};
 
 impl SigaaTime {
+    /// Cria uma nova instância de `SigaaTime`.
+    ///
+    /// # Parâmetros
+    ///
+    /// * `dia` - O dia da semana, do tipo `Dia`.
+    /// * `turno` - O turno do dia, do tipo `Turno`.
+    ///
+    /// # Retorno
+    ///
+    /// Retorna uma nova instância de `SigaaTime` com o `dia` e `turno` fornecidos.
+    ///
+    /// # Exemplo
+    ///
+    /// ```
+    /// let sigaa_time = SigaaTime::new(Dia::Segunda, Turno::Manhã(HorarioDiurno::Primeiro));
+    /// ```
     pub fn new(dia: Dia, turno: Turno) -> SigaaTime {
         SigaaTime { dia, turno }
     }
 
+    /// Cria uma nova instância de `SigaaTime` a partir de strings.
+    ///
+    /// As strings são convertidas em seus respectivos tipos `Dia` e `Turno`. Se a conversão falhar,
+    /// um erro de tipo `SigaaTimeErrors` será retornado.
+    ///
+    /// # Parâmetros
+    ///
+    /// * `dia_str` - Uma string representando o dia da semana.
+    /// * `turno_str` - Uma string representando o turno do dia.
+    ///
+    /// # Retorno
+    ///
+    /// Retorna `Ok(SigaaTime)` se a conversão for bem-sucedida, ou um `Err(SigaaTimeErrors)` em caso de falha.
+    ///
+    /// # Exemplo
+    ///
+    /// ```
+    /// match SigaaTime::new_from_strings("2", "M12") {
+    ///     Ok(sigaa_time) => println!("Horário criado com sucesso: {:?}", sigaa_time),
+    ///     Err(e) => println!("Erro ao criar horário: {:?}", e),
+    /// }
+    /// ```
     pub fn new_from_strings(dia_str: &str, turno_str: &str) -> Result<SigaaTime, SigaaTimeErrors> {
         let dia: Dia = dia_str.try_into()?;
         let turno: Turno = turno_str.try_into()?;

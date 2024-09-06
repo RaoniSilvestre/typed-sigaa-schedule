@@ -1,6 +1,16 @@
 use super::{Disciplina, DisciplineWasFound, Schedule, ScheduleError, ScheduleUnity, SigaaTime};
 
 impl Schedule {
+    /// Cria uma nova instância de `Schedule` com uma matriz de `ScheduleUnity` inicializada.
+    ///
+    /// A matriz tem 8 linhas e 6 colunas, representando diferentes turnos e dias da semana.
+    /// Cada `ScheduleUnity` é inicializado com um horário (`SigaaTime`) e nenhuma disciplina.
+    ///
+    /// # Exemplo
+    ///
+    /// ```
+    /// let schedule = Schedule::new();
+    /// ```
     pub fn new() -> Schedule {
         Schedule(
             (0..8)
@@ -19,12 +29,32 @@ impl Schedule {
         )
     }
 
+    /// Obtém uma referência mutável para um `ScheduleUnity` específico.
+    ///
+    /// # Parâmetros
+    ///
+    /// * `turno_index` - O índice do turno (linha) na matriz.
+    /// * `dia_index` - O índice do dia (coluna) na matriz.
+    ///
+    /// # Retorno
+    ///
+    /// Retorna uma referência mutável para o `ScheduleUnity` se o índice for válido, caso contrário, retorna `None`.
     fn get_mut(&mut self, turno_index: usize, dia_index: usize) -> Option<&mut ScheduleUnity> {
         self.0
             .get_mut(turno_index)
             .and_then(|row| row.get_mut(dia_index))
     }
 
+    /// Verifica se uma disciplina pode ser inserida sem conflitos.
+    ///
+    /// # Parâmetros
+    ///
+    /// * `disciplina` - A disciplina a ser verificada.
+    ///
+    /// # Retorno
+    ///
+    /// Retorna `DisciplineWasFound::DisciplineFound` se uma disciplina já estiver ocupando algum dos horários
+    /// da disciplina fornecida, caso contrário, retorna `DisciplineWasFound::DisciplineNotFound`.
     pub fn verify_availability(&self, disciplina: &Disciplina) -> DisciplineWasFound {
         for &sigaa_time in &disciplina.sigaa_time {
             let dia_index: usize = sigaa_time.dia.into();
@@ -40,6 +70,18 @@ impl Schedule {
         DisciplineWasFound::DisciplineNotFound
     }
 
+    /// Insere uma disciplina no cronograma.
+    ///
+    /// Se a disciplina não estiver ocupando nenhum horário existente, ela será inserida nos horários correspondentes.
+    /// Se houver conflitos com disciplinas existentes, retorna um erro.
+    ///
+    /// # Parâmetros
+    ///
+    /// * `disciplina` - A disciplina a ser inserida.
+    ///
+    /// # Retorno
+    ///
+    /// Retorna `Ok(())` se a inserção for bem-sucedida, ou um erro do tipo `ScheduleError` se houver conflitos ou problemas.
     pub fn insert(&mut self, disciplina: Disciplina) -> Result<(), ScheduleError> {
         match self.verify_availability(&disciplina) {
             DisciplineWasFound::DisciplineNotFound => {
@@ -68,16 +110,41 @@ impl Schedule {
         }
     }
 
+    /// Obtém uma referência para um `ScheduleUnity` específico.
+    ///
+    /// # Parâmetros
+    ///
+    /// * `row` - O índice da linha (turno) na matriz.
+    /// * `col` - O índice da coluna (dia) na matriz.
+    ///
+    /// # Retorno
+    ///
+    /// Retorna uma referência para o `ScheduleUnity` se o índice for válido, caso contrário, retorna `None`.
     pub fn get(&self, row: usize, col: usize) -> Option<&ScheduleUnity> {
         self.0.get(row)?.get(col)
     }
 
+    /// Obtém as dimensões da matriz de cronograma.
+    ///
+    /// # Retorno
+    ///
+    /// Retorna uma tupla contendo o número de linhas e colunas na matriz do cronograma.
     pub fn len(&self) -> (usize, usize) {
         (self.0.len(), self.0[0].len())
     }
 }
 
 impl ScheduleUnity {
+    /// Cria uma nova instância de `ScheduleUnity`.
+    ///
+    /// # Parâmetros
+    ///
+    /// * `horario` - O horário associado a esta unidade.
+    /// * `disciplina` - A disciplina associada a esta unidade (pode ser `None`).
+    ///
+    /// # Retorno
+    ///
+    /// Retorna uma nova instância de `ScheduleUnity`.
     pub fn new(horario: SigaaTime, disciplina: Option<Disciplina>) -> ScheduleUnity {
         ScheduleUnity {
             horario,
@@ -85,6 +152,13 @@ impl ScheduleUnity {
         }
     }
 
+    /// Cria uma instância padrão de `ScheduleUnity`.
+    ///
+    /// Esta instância é criada com um horário padrão e nenhuma disciplina.
+    ///
+    /// # Retorno
+    ///
+    /// Retorna uma nova instância de `ScheduleUnity` com um horário padrão e disciplina como `None`.
     pub fn default() -> ScheduleUnity {
         let horario = SigaaTime::new_from_strings("2", "M12").unwrap();
         ScheduleUnity {

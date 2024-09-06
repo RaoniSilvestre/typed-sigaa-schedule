@@ -2,9 +2,8 @@ extern crate sigaa_sched;
 
 #[cfg(test)]
 mod schedule_tests {
-    use sigaa_sched::disciplina::Disciplina;
     use sigaa_sched::time::{Dia, HorarioDiurno, SigaaTime, SigaaTimeErrors, Turno};
-    use sigaa_sched::{Schedule, ScheduleUnity};
+    use sigaa_sched::{disciplina::Disciplina, Schedule, ScheduleUnity};
 
     #[test]
     fn should_create_a_schedule_unity() {
@@ -43,6 +42,6 @@ mod schedule_tests {
         let disciplina_1 =
             Disciplina::new_stringify("Fundamentos mamáticos da computação I", "246M12").unwrap();
 
-        assert_eq!(schedule.insert(disciplina_1), Ok(()));
+        assert_eq!(schedule.insert(disciplina_1.clone()), Ok(()));
     }
 }

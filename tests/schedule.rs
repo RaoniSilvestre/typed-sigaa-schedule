@@ -29,8 +29,8 @@ mod schedule_tests {
         let schedule_unity_2 = ScheduleUnity::new(sigaa_time_2, None);
 
         assert_eq!(schedule.len(), (8, 6));
-        assert_eq!(schedule.get(0, 0), Some(&schedule_unity));
-        assert_eq!(schedule.get(0, 1), Some(&schedule_unity_2));
+        assert_eq!(schedule.get_from_str("2M12"), Some(&schedule_unity));
+        assert_eq!(schedule.get_from_str("3M12"), Some(&schedule_unity_2));
 
         Ok(())
     }

@@ -143,6 +143,12 @@ impl Schedule {
     }
 }
 
+impl Default for Schedule {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 impl ScheduleUnity {
     /// Cria uma nova instância de `ScheduleUnity`.
     ///
@@ -158,21 +164,6 @@ impl ScheduleUnity {
         ScheduleUnity {
             horario,
             disciplina,
-        }
-    }
-
-    /// Cria uma instância padrão de `ScheduleUnity`.
-    ///
-    /// Esta instância é criada com um horário padrão e nenhuma disciplina.
-    ///
-    /// # Retorno
-    ///
-    /// Retorna uma nova instância de `ScheduleUnity` com um horário padrão e disciplina como `None`.
-    pub fn default() -> ScheduleUnity {
-        let horario = SigaaTime::new_from_strings("2", "M12").unwrap();
-        ScheduleUnity {
-            horario,
-            disciplina: None,
         }
     }
 }

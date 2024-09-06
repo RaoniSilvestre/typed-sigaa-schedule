@@ -16,7 +16,7 @@ enum AuxErrors {
 
 pub fn generate_abreviação(nome: &str) -> String {
     let mut abreviação = String::new();
-    let palavras_excluidas = vec!["de", "em", "da", "do", "das", "dos"];
+    let palavras_excluidas = ["de", "em", "da", "do", "das", "dos"];
 
     for substring in nome.split_whitespace() {
         if !palavras_excluidas.contains(&substring.to_lowercase().as_str()) {
@@ -45,13 +45,7 @@ pub fn generate_horario_display(disciplina: &Disciplina) -> String {
     for (i, turno) in turnos.iter().enumerate() {
         match i {
             0 => output = format!("{}{}", output, turno),
-            _ => {
-                output = format!(
-                    "{}{}",
-                    output,
-                    <Turno as Into<String>>::into(*turno)[1..].to_string()
-                )
-            }
+            _ => output = format!("{}{}", output, &<Turno as Into<String>>::into(*turno)[1..]),
         }
     }
     output
@@ -60,7 +54,7 @@ pub fn generate_horario_display(disciplina: &Disciplina) -> String {
 pub fn is_formatted(time: &str) -> bool {
     let regex = Regex::new(r"^(\d{1,5})([MTN])(\d{2,6})$").unwrap();
 
-    if let Some(captura) = regex.captures(&time) {
+    if let Some(captura) = regex.captures(time) {
         let dd = &captura[1];
         let hhhh = &captura[3];
 
@@ -76,7 +70,7 @@ pub fn is_formatted(time: &str) -> bool {
 
         if hhhh
             .chars()
-            .all(|c| c.is_digit(10) && ('1'..='6').contains(&c))
+            .all(|c| c.is_ascii_digit() && ('1'..='6').contains(&c))
         {
             return true;
         }
@@ -90,14 +84,14 @@ pub fn valid_string_to_vec_sigaa_times(valid_string: &str) -> BTreeSet<SigaaTime
 }
 
 fn breakdown(value: &str, vec: &mut BTreeSet<SigaaTime>) -> BTreeSet<SigaaTime> {
-    let days = extract_day(&value).len();
+    let days = extract_day(value).len();
 
     match days {
         1 if value.len() == 4 => {
             vec.insert(value.try_into().unwrap());
         }
-        1 => hour_breaker(&value, vec),
-        _ => day_breaker(days, &value, vec),
+        1 => hour_breaker(value, vec),
+        _ => day_breaker(days, value, vec),
     }
 
     vec.deref().clone()

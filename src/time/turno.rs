@@ -40,17 +40,17 @@ impl TryFrom<&str> for Turno {
     }
 }
 
-impl Into<String> for Turno {
-    fn into(self) -> String {
-        match self {
-            Self::Manhã(HorarioDiurno::Primeiro) => "M12",
-            Self::Manhã(HorarioDiurno::Segundo) => "M34",
-            Self::Manhã(HorarioDiurno::Terceiro) => "M56",
-            Self::Tarde(HorarioDiurno::Primeiro) => "T12",
-            Self::Tarde(HorarioDiurno::Segundo) => "T34",
-            Self::Tarde(HorarioDiurno::Terceiro) => "T56",
-            Self::Noite(HorarioNoturno::Primeiro) => "N12",
-            Self::Noite(HorarioNoturno::Segundo) => "N34",
+impl From<Turno> for String {
+    fn from(val: Turno) -> Self {
+        match val {
+            Turno::Manhã(HorarioDiurno::Primeiro) => "M12",
+            Turno::Manhã(HorarioDiurno::Segundo) => "M34",
+            Turno::Manhã(HorarioDiurno::Terceiro) => "M56",
+            Turno::Tarde(HorarioDiurno::Primeiro) => "T12",
+            Turno::Tarde(HorarioDiurno::Segundo) => "T34",
+            Turno::Tarde(HorarioDiurno::Terceiro) => "T56",
+            Turno::Noite(HorarioNoturno::Primeiro) => "N12",
+            Turno::Noite(HorarioNoturno::Segundo) => "N34",
         }
         .to_string()
     }
@@ -74,27 +74,24 @@ impl TryFrom<usize> for Turno {
     }
 }
 
-impl Into<usize> for Turno {
-    fn into(self) -> usize {
-        match self {
-            Self::Manhã(HorarioDiurno::Primeiro) => 0,
-            Self::Manhã(HorarioDiurno::Segundo) => 1,
-            Self::Manhã(HorarioDiurno::Terceiro) => 2,
-            Self::Tarde(HorarioDiurno::Primeiro) => 3,
-            Self::Tarde(HorarioDiurno::Segundo) => 4,
-            Self::Tarde(HorarioDiurno::Terceiro) => 5,
-            Self::Noite(HorarioNoturno::Primeiro) => 6,
-            Self::Noite(HorarioNoturno::Segundo) => 7,
+impl From<Turno> for usize {
+    fn from(value: Turno) -> Self {
+        match value {
+            Turno::Manhã(HorarioDiurno::Primeiro) => 0,
+            Turno::Manhã(HorarioDiurno::Segundo) => 1,
+            Turno::Manhã(HorarioDiurno::Terceiro) => 2,
+            Turno::Tarde(HorarioDiurno::Primeiro) => 3,
+            Turno::Tarde(HorarioDiurno::Segundo) => 4,
+            Turno::Tarde(HorarioDiurno::Terceiro) => 5,
+            Turno::Noite(HorarioNoturno::Primeiro) => 6,
+            Turno::Noite(HorarioNoturno::Segundo) => 7,
         }
     }
 }
 
 impl PartialOrd for Turno {
     fn partial_cmp(&self, other: &Self) -> Option<std::cmp::Ordering> {
-        let self_usize: usize = (*self).into();
-        let other_usize: usize = (*other).into();
-
-        Some(self_usize.cmp(&other_usize))
+        Some(self.cmp(other))
     }
 }
 

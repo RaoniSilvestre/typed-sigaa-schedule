@@ -31,9 +31,9 @@ impl TryFrom<usize> for Dia {
     }
 }
 
-impl Into<usize> for Dia {
-    fn into(self) -> usize {
-        match self {
+impl From<Dia> for usize {
+    fn from(value: Dia) -> Self {
+        match value {
             Dia::Segunda => 0,
             Dia::Terça => 1,
             Dia::Quarta => 2,

@@ -43,7 +43,7 @@ impl Display for Disciplina {
             "{} - {} - {}",
             self.nome,
             self.abreviacao,
-            generate_horario_display(&self)
+            generate_horario_display(self)
         )
     }
 }

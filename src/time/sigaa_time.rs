@@ -70,7 +70,7 @@ impl TryFrom<&str> for SigaaTime {
                 let turnos = capturas[2].to_string();
                 let horarios = capturas[3].to_string();
                 let turno_horarios = turnos + &horarios;
-                return Ok(SigaaTime::new_from_strings(&dias, &turno_horarios)?);
+                SigaaTime::new_from_strings(&dias, &turno_horarios)
             }
             None => Err(SigaaTimeErrors::InvalidStringToSigaaTime),
         }
@@ -79,10 +79,7 @@ impl TryFrom<&str> for SigaaTime {
 
 impl PartialOrd for SigaaTime {
     fn partial_cmp(&self, other: &Self) -> Option<std::cmp::Ordering> {
-        let this_dia_usized: usize = self.dia.into();
-        let other_dia_usized: usize = other.dia.into();
-
-        Some(this_dia_usized.cmp(&other_dia_usized))
+        Some(self.cmp(other))
     }
 }
 

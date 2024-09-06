@@ -125,6 +125,16 @@ impl Schedule {
         self.0.get(row)?.get(col)
     }
 
+    /// Obtém uma referência para um `ScheduleUnity` específico.
+    ///
+    /// # Parâmetros
+    ///
+    /// * `input` - Uma &str no formato do SigaaTime.
+    ///
+    ///
+    /// # Retorno
+    ///
+    /// Retorna uma referência para o `ScheduleUnity` se a for válido, caso contrário, retorna `None`.
     pub fn get_from_str(&self, input: &str) -> Option<&ScheduleUnity> {
         let sigaa_time_str: SigaaTime = input.try_into().unwrap();
 

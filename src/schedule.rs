@@ -13,21 +13,7 @@ impl Schedule {
     /// let schedule = Schedule::new();
     /// ```
     pub fn new() -> Schedule {
-        Schedule(
-            (0..8)
-                .map(|row| {
-                    (0..6)
-                        .map(|col| {
-                            let dia = col.try_into().unwrap();
-                            let turno = row.try_into().unwrap();
-                            let sigaa_time = SigaaTime::new(dia, turno);
-
-                            ScheduleUnity::new(sigaa_time, None)
-                        })
-                        .collect::<Vec<ScheduleUnity>>()
-                })
-                .collect::<Vec<Vec<ScheduleUnity>>>(),
-        )
+        Schedule((0..8).map(|row| create_row(row)).collect())
     }
 
     /// Obtém uma referência mutável para um `ScheduleUnity` específico.
@@ -176,6 +162,17 @@ impl ScheduleUnity {
             disciplina,
         }
     }
+}
+
+fn create_schedule_unity(row: usize, col: usize) -> ScheduleUnity {
+    ScheduleUnity::new(
+        SigaaTime::new(col.try_into().unwrap(), row.try_into().unwrap()),
+        None,
+    )
+}
+
+fn create_row(row: usize) -> Vec<ScheduleUnity> {
+    (0..6).map(|col| create_schedule_unity(row, col)).collect()
 }
 
 #[cfg(test)]

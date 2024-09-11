@@ -1,3 +1,5 @@
+use crate::time::{Dia, Turno};
+
 use super::{Disciplina, DisciplineWasFound, Schedule, ScheduleError, ScheduleUnity, SigaaTime};
 
 impl Schedule {
@@ -13,7 +15,7 @@ impl Schedule {
     /// let schedule = Schedule::new();
     /// ```
     pub fn new() -> Schedule {
-        Schedule((0..8).map(|row| create_row(row)).collect())
+        Schedule((0..8).map(create_row).collect())
     }
 
     /// Obtém uma referência mutável para um `ScheduleUnity` específico.
@@ -164,15 +166,20 @@ impl ScheduleUnity {
     }
 }
 
-fn create_schedule_unity(row: usize, col: usize) -> ScheduleUnity {
-    ScheduleUnity::new(
-        SigaaTime::new(col.try_into().unwrap(), row.try_into().unwrap()),
-        None,
-    )
+fn create_row(row: usize) -> Vec<ScheduleUnity> {
+    (0..6)
+        .map(|col| (row, col))
+        .map(usize_to_turno_dia)
+        .map(create_schedule_unity)
+        .collect()
 }
 
-fn create_row(row: usize) -> Vec<ScheduleUnity> {
-    (0..6).map(|col| create_schedule_unity(row, col)).collect()
+fn create_schedule_unity((row, col): (Turno, Dia)) -> ScheduleUnity {
+    ScheduleUnity::new(SigaaTime::new(col, row), None)
+}
+
+fn usize_to_turno_dia((row, col): (usize, usize)) -> (Turno, Dia) {
+    (row.try_into().unwrap(), col.try_into().unwrap())
 }
 
 #[cfg(test)]

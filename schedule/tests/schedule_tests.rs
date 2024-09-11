@@ -1,9 +1,8 @@
-extern crate sigaa_sched;
-
 #[cfg(test)]
 mod schedule_tests {
-    use sigaa_sched::time::{Dia, HorarioDiurno, SigaaTime, SigaaTimeErrors, Turno};
-    use sigaa_sched::{disciplina::Disciplina, Schedule, ScheduleUnity};
+    use class::Disciplina;
+    use schedule::{Schedule, ScheduleUnity};
+    use stf::{Dia, HorarioDiurno, SigaaTime, SigaaTimeErrors, Turno};
 
     #[test]
     fn should_create_a_schedule_unity() {

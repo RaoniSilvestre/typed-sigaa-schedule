@@ -1,7 +1,8 @@
-[package]
-name = "sigaa-sched"
-version = "0.1.0"
-edition = "2021"
+[workspace]
+members = [
+    "schedule",
+    "class",
+    "stf",
+]
 
-[dependencies]
-regex = "1.10.6"
+

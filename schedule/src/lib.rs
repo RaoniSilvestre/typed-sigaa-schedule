@@ -1,5 +1,5 @@
-use disciplina::Disciplina;
-use time::{SigaaTime, SigaaTimeErrors};
+use class::Disciplina;
+use stf::{SigaaTime, SigaaTimeErrors};
 
 /// Representa uma unidade de horário em um cronograma.
 ///
@@ -42,16 +42,5 @@ pub enum DisciplineWasFound {
     DisciplineNotFound,
 }
 
-/// Módulo que lida com disciplinas.
-///
-/// Este módulo define a estrutura `Disciplina` e os erros relacionados às disciplinas. Também
-/// inclui funcionalidades auxiliares e de implementação para gerenciar e manipular disciplinas.
-pub mod disciplina;
-
 mod schedule;
-
-/// Módulo que lida com horários e dias da semana.
-///
-/// Este módulo define enums e structs para representar dias da semana, turnos e horários (`SigaaTime`).
-/// Também inclui erros associados à conversão e formatação de horários.
-pub mod time;
+mod schedule_unity;

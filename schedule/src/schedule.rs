@@ -1,6 +1,6 @@
-use crate::time::{Dia, Turno};
-
-use super::{Disciplina, DisciplineWasFound, Schedule, ScheduleError, ScheduleUnity, SigaaTime};
+use super::{DisciplineWasFound, Schedule, ScheduleError, ScheduleUnity};
+use class::Disciplina;
+use stf::{Dia, SigaaTime, Turno};
 
 impl Schedule {
     /// Cria uma nova instância de `Schedule` com uma matriz de `ScheduleUnity` inicializada.
@@ -11,7 +11,7 @@ impl Schedule {
     /// # Exemplo
     ///
     /// ```
-    /// use sigaa_sched::Schedule;
+    /// use schedule::Schedule;
     /// let schedule = Schedule::new();
     /// ```
     pub fn new() -> Schedule {
@@ -147,25 +147,6 @@ impl Default for Schedule {
     }
 }
 
-impl ScheduleUnity {
-    /// Cria uma nova instância de `ScheduleUnity`.
-    ///
-    /// # Parâmetros
-    ///
-    /// * `horario` - O horário associado a esta unidade.
-    /// * `disciplina` - A disciplina associada a esta unidade (pode ser `None`).
-    ///
-    /// # Retorno
-    ///
-    /// Retorna uma nova instância de `ScheduleUnity`.
-    pub fn new(horario: SigaaTime, disciplina: Option<Disciplina>) -> ScheduleUnity {
-        ScheduleUnity {
-            horario,
-            disciplina,
-        }
-    }
-}
-
 fn create_row(row: usize) -> Vec<ScheduleUnity> {
     (0..6)
         .map(|col| (row, col))
@@ -180,61 +161,4 @@ fn create_schedule_unity((row, col): (Turno, Dia)) -> ScheduleUnity {
 
 fn usize_to_turno_dia((row, col): (usize, usize)) -> (Turno, Dia) {
     (row.try_into().unwrap(), col.try_into().unwrap())
-}
-
-#[cfg(test)]
-mod test {
-    use crate::{
-        disciplina::Disciplina,
-        time::{Dia, HorarioDiurno, SigaaTimeErrors, Turno},
-        Schedule, ScheduleUnity, SigaaTime,
-    };
-
-    #[test]
-    fn should_create_a_schedule_unity() {
-        let sigaa_time = SigaaTime::new(Dia::Terça, Turno::Tarde(HorarioDiurno::Segundo));
-
-        let schedule_unity = ScheduleUnity::new(sigaa_time, None);
-
-        let sigaa_time_str: String = sigaa_time.to_string();
-
-        assert_eq!(sigaa_time_str, "3T34");
-        assert_eq!(schedule_unity.horario, sigaa_time);
-        assert_eq!(schedule_unity.disciplina, None);
-    }
-
-    #[test]
-    fn should_create_a_schedule() -> Result<(), SigaaTimeErrors> {
-        let schedule = Schedule::new();
-
-        let sigaa_time = SigaaTime::new_from_strings("2", "M12")?;
-        let sigaa_time_2 = SigaaTime::new_from_strings("3", "M12")?;
-
-        let schedule_unity = ScheduleUnity::new(sigaa_time, None);
-        let schedule_unity_2 = ScheduleUnity::new(sigaa_time_2, None);
-
-        assert_eq!(schedule.len(), (8, 6));
-        assert_eq!(schedule.get(0, 0), Some(&schedule_unity));
-        assert_eq!(schedule.get(0, 1), Some(&schedule_unity_2));
-
-        assert_eq!(schedule.get_from_str("2M12"), Some(&schedule_unity));
-        assert_eq!(schedule.get_from_str("3M12"), Some(&schedule_unity_2));
-
-        Ok(())
-    }
-
-    #[test]
-    fn insert_into_schedule_should_return_ok() {
-        let mut schedule = Schedule::new();
-
-        let disciplina_1 =
-            Disciplina::new_stringify("Fundamentos mamáticos da computação I", "246M12").unwrap();
-
-        assert_eq!(schedule.insert(disciplina_1.clone()), Ok(()));
-
-        let schedule_unity = schedule.get_from_str("2M12").unwrap();
-
-        assert_eq!(schedule_unity.horario.to_string(), "2M12");
-        assert_eq!(schedule_unity.disciplina, Some(disciplina_1));
-    }
 }

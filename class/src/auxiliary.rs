@@ -1,13 +1,8 @@
-use core::panic;
+use super::Disciplina;
+use regex::Regex;
 use std::collections::BTreeSet;
 use std::ops::Deref;
-
-use crate::time::Dia;
-use crate::time::Turno;
-
-use super::Disciplina;
-use super::SigaaTime;
-use regex::Regex;
+use stf::{Dia, SigaaTime, Turno};
 
 #[derive(Debug)]
 enum AuxErrors {

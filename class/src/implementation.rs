@@ -1,9 +1,8 @@
 use super::auxiliary::*;
+use super::{Disciplina, DisciplinaErrors};
 use std::collections::BTreeSet;
 use std::fmt::Display;
-
-use super::SigaaTime;
-use super::{Disciplina, DisciplinaErrors};
+use stf::SigaaTime;
 
 impl Disciplina {
     pub fn new(nome: &str, sigaa_time: BTreeSet<SigaaTime>) -> Disciplina {

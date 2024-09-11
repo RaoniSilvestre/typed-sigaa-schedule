@@ -1,6 +1,6 @@
 use std::collections::BTreeSet;
 
-use super::SigaaTime;
+use stf::SigaaTime;
 
 // Representa uma disciplina no sistema.
 ///

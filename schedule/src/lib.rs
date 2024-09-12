@@ -30,6 +30,8 @@ pub enum ScheduleError {
     TimeNotFound(SigaaTime),
     /// Erros associados ao `SigaaTime`.
     SigaaTimeErrors(SigaaTimeErrors),
+    /// Disciplina não encontrada para remoção
+    DisciplineNotFoundToRemove,
 }
 
 /// Resultado de busca de disciplina.

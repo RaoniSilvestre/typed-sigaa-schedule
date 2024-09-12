@@ -1,7 +1,7 @@
 use super::auxiliary::*;
 use super::{Disciplina, DisciplinaErrors};
 use std::collections::BTreeSet;
-use std::fmt::Display;
+use std::fmt::{self, Display};
 use stf::SigaaTime;
 
 impl Disciplina {
@@ -44,5 +44,16 @@ impl Display for Disciplina {
             self.abreviacao,
             generate_horario_display(self)
         )
+    }
+}
+
+impl fmt::Debug for Disciplina {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(f, "{} -", self.abreviacao)?;
+        for sigaa_time in self.sigaa_time.iter() {
+            write!(f, " {}", sigaa_time)?
+        }
+
+        Ok(())
     }
 }

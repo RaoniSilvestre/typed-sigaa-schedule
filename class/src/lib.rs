@@ -5,7 +5,7 @@ use stf::SigaaTime;
 // Representa uma disciplina no sistema.
 ///
 /// Cada disciplina tem um nome, uma abreviação e um conjunto de horários (`SigaaTime`) associados.
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Clone, PartialEq, Eq)]
 pub struct Disciplina {
     /// Nome da disciplina.
     pub nome: String,

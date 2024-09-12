@@ -19,4 +19,8 @@ impl ScheduleUnity {
             disciplina,
         }
     }
+
+    pub fn update(&mut self, disciplina: Option<Disciplina>) {
+        self.disciplina = disciplina
+    }
 }

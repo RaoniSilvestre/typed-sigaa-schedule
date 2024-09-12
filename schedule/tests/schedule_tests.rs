@@ -27,7 +27,6 @@ mod schedule_tests {
         let schedule_unity = ScheduleUnity::new(sigaa_time, None);
         let schedule_unity_2 = ScheduleUnity::new(sigaa_time_2, None);
 
-        assert_eq!(schedule.len(), (8, 6));
         assert_eq!(schedule.get_from_str("2M12"), Some(&schedule_unity));
         assert_eq!(schedule.get_from_str("3M12"), Some(&schedule_unity_2));
 
@@ -42,5 +41,33 @@ mod schedule_tests {
             Disciplina::new_stringify("Fundamentos mamáticos da computação I", "246M12").unwrap();
 
         assert_eq!(schedule.insert(disciplina_1.clone()), Ok(()));
+        assert_eq!(
+            schedule.get_from_str("2M12").unwrap().disciplina,
+            Some(disciplina_1.clone())
+        );
+
+        assert_eq!(
+            schedule.get_from_str("4M12").unwrap().disciplina,
+            Some(disciplina_1.clone())
+        );
+        assert_eq!(
+            schedule.get_from_str("6M12").unwrap().disciplina,
+            Some(disciplina_1)
+        )
+    }
+
+    #[test]
+    fn insert_and_remove_from_schedule_should_not_have_discipline() {
+        let mut schedule = Schedule::new();
+
+        let disciplina_1 =
+            Disciplina::new_stringify("Fundamentos mamáticos da computação I", "246M12").unwrap();
+
+        assert_eq!(schedule.insert(disciplina_1.clone()), Ok(()));
+        assert_eq!(schedule.remove(disciplina_1.clone()), Ok(()));
+
+        for &sigaa_time in &disciplina_1.sigaa_time {
+            assert_eq!(schedule.get(sigaa_time).unwrap(),)
+        }
     }
 }

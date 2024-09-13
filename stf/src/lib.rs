@@ -1,5 +1,7 @@
+use serde::{Deserialize, Serialize};
+
 /// Dias da semana utilizados nos horários.
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Serialize, Deserialize)]
 pub enum Dia {
     Segunda,
     Terça,
@@ -10,7 +12,7 @@ pub enum Dia {
 }
 
 /// Turnos do dia para horários
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 pub enum Turno {
     /// Turnos diurnos (manhã e tarde). Cada um tem três possibilidades:
     ///
@@ -25,7 +27,7 @@ pub enum Turno {
 }
 
 /// Horários diurnos
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 pub enum HorarioDiurno {
     Primeiro,
     Segundo,
@@ -33,7 +35,7 @@ pub enum HorarioDiurno {
 }
 
 /// Horários noturnos
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 pub enum HorarioNoturno {
     Primeiro,
     Segundo,
@@ -43,7 +45,7 @@ pub enum HorarioNoturno {
 ///
 /// Exemplo:
 /// 2T56 , 4M12, 6N34
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 pub struct SigaaTime {
     pub dia: Dia,
     pub turno: Turno,
@@ -52,7 +54,7 @@ pub struct SigaaTime {
 /// Erros relacionados ao `SigaaTime`.
 ///
 /// Estes erros cobrem problemas de conversão e formatação para `SigaaTime`.
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Serialize, Deserialize)]
 pub enum SigaaTimeErrors {
     /// Erro ao converter um `usize` para um dia.
     InvalidUsizeToDay,

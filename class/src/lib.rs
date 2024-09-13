@@ -1,11 +1,11 @@
+use serde::{Deserialize, Serialize};
 use std::collections::BTreeSet;
-
 use stf::SigaaTime;
 
 // Representa uma disciplina no sistema.
 ///
 /// Cada disciplina tem um nome, uma abreviação e um conjunto de horários (`SigaaTime`) associados.
-#[derive(Clone, PartialEq, Eq)]
+#[derive(Clone, PartialEq, Eq, Serialize, Deserialize)]
 pub struct Disciplina {
     /// Nome da disciplina.
     pub nome: String,

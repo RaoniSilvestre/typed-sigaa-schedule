@@ -1,43 +1,27 @@
 <!doctype html>
 <html>
-  <head>
-    <title>Agenda do Sigaa</title>
+
+<head>
+    <title>Yes Tailwind</title>
     <meta charset="utf-8" />
-    <link
-      rel="stylesheet"
-      href="/typed-sigaa-schedule/output-63eca51f6694c54a.css"
-      integrity="sha384&#x2D;nGJedYeicFQTwFnwDeQWuUPxrE82ru98V&#x2B;bHlhmIDSphbRTstctAqrEffGnsz7U9"
-    />
+    <title>Yew App</title>
+    <link rel="stylesheet" href="/typed-sigaa-schedule/output-63eca51f6694c54a.css" integrity="sha384&#x2D;nGJedYeicFQTwFnwDeQWuUPxrE82ru98V&#x2B;bHlhmIDSphbRTstctAqrEffGnsz7U9"/>
     <base href="/typed-sigaa-schedule/" />
 
-    <link
-      rel="modulepreload"
-      href="/typed-sigaa-schedule/view-yew-5488f2a630fd2148.js"
-      crossorigin="anonymous"
-      integrity="sha384-HCLPPnmlbyjke6t0SQrVHCnX/Hxb0a4yFc2wTjNU8wFb6H6UljCUIT+SiOrfrP1u"
-    />
-    <link
-      rel="preload"
-      href="/typed-sigaa-schedule/view-yew-5488f2a630fd2148_bg.wasm"
-      crossorigin="anonymous"
-      integrity="sha384-80kGR89TDTvA9Dk8JDmFxsD7mMh5WzeokQw/3/HFqvgzgzNZs0y4eqtCITJp1+WT"
-      as="fetch"
-      type="application/wasm"
-    />
-  </head>
+<link rel="modulepreload" href="/typed-sigaa-schedule/view-yew-9a7ce655ed5e47ea.js" crossorigin=anonymous integrity="sha384-HCLPPnmlbyjke6t0SQrVHCnX/Hxb0a4yFc2wTjNU8wFb6H6UljCUIT+SiOrfrP1u">
+<link rel="preload" href="/typed-sigaa-schedule/view-yew-9a7ce655ed5e47ea_bg.wasm" crossorigin=anonymous integrity="sha384-WJaKpoe0cLp/0rkEXKHgmwQY5bCWB5FMPmCMyZK4vfkz/bqUdsfiY74oNqkywfI1" as="fetch" type="application/wasm"></head>
 
-  <body>
-    <script type="module" nonce="nc0ywpoUxMZKaUk3ZRv/tg==">
-      import init, * as bindings from "/typed-sigaa-schedule/view-yew-5488f2a630fd2148.js";
-      const wasm = await init(
-        "/typed-sigaa-schedule/view-yew-5488f2a630fd2148_bg.wasm",
-      );
+<body>
+<script type="module" nonce="dlyaRlLsJJlFQ+u+zc0noQ==">
+import init, * as bindings from '/typed-sigaa-schedule/view-yew-9a7ce655ed5e47ea.js';
+const wasm = await init('/typed-sigaa-schedule/view-yew-9a7ce655ed5e47ea_bg.wasm');
 
-      window.wasmBindings = bindings;
 
-      dispatchEvent(
-        new CustomEvent("TrunkApplicationStarted", { detail: { wasm } }),
-      );
-    </script>
-  </body>
+window.wasmBindings = bindings;
+
+
+dispatchEvent(new CustomEvent("TrunkApplicationStarted", {detail: {wasm}}));
+
+</script></body>
+
 </html>

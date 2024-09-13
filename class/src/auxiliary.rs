@@ -208,8 +208,7 @@ mod tests {
 
     #[test]
     fn should_generate_a_correct_horario_display() {
-        let dis =
-            Disciplina::new_stringify("Fundamentos Matemáticos da Computação", "246T12").unwrap();
+        let dis = Disciplina::new_stringify("Fundamentos Matemáticos da Computação", "246T12").unwrap();
         let dis_2 = Disciplina::new_stringify("a", "24M1234").unwrap();
 
         assert_eq!(generate_horario_display(&dis), "246T12");

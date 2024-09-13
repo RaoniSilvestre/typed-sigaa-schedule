@@ -27,9 +27,9 @@ pub fn FormComponent(props: &FormProps) -> Html {
 
     // Isso aqui mantém o horário atualizado no struct Data
     let cloned_state = state.clone();
-    let disciplina_changed = Callback::from(move |horario| {
+    let disciplina_changed = Callback::from(move |horario: String| {
         let mut data = cloned_state.deref().clone();
-        data.horario = horario;
+        data.horario = horario.to_uppercase();
         cloned_state.set(data);
     });
 

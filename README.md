@@ -16,3 +16,7 @@ Implementação da estrutura de dados do horário do sigaa em rust, onde tudo é
 
 - **Disciplina**
   O nome diz tudo
+
+## Site
+
+https://raonisilvestre.github.io/typed-sigaa-schedule/

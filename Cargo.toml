@@ -2,7 +2,6 @@
 members = [
     "schedule",
     "class",
-    "stf",
+    "stf", "view-yew",
 ]
-
-
+resolver = "2"

@@ -1,7 +1,7 @@
 #[cfg(test)]
 mod schedule_tests {
     use class::Disciplina;
-    use schedule::{Schedule, ScheduleUnity};
+    use schedule::{DisciplineWasFound, Schedule, ScheduleUnity};
     use stf::{Dia, HorarioDiurno, SigaaTime, SigaaTimeErrors, Turno};
 
     #[test]
@@ -37,37 +37,33 @@ mod schedule_tests {
     fn insert_into_schedule_should_return_ok() {
         let mut schedule = Schedule::new();
 
-        let disciplina_1 =
-            Disciplina::new_stringify("Fundamentos mamáticos da computação I", "246M12").unwrap();
+        let disciplina_1 = Disciplina::new_stringify("Fundamentos mamáticos da computação I", "246M12").unwrap();
 
         assert_eq!(schedule.insert(disciplina_1.clone()), Ok(()));
-        assert_eq!(
-            schedule.get_from_str("2M12").unwrap().disciplina,
-            Some(disciplina_1.clone())
-        );
+        assert_eq!(schedule.get_from_str("2M12").unwrap().disciplina, Some(disciplina_1.clone()));
 
-        assert_eq!(
-            schedule.get_from_str("4M12").unwrap().disciplina,
-            Some(disciplina_1.clone())
-        );
-        assert_eq!(
-            schedule.get_from_str("6M12").unwrap().disciplina,
-            Some(disciplina_1)
-        )
+        assert_eq!(schedule.get_from_str("4M12").unwrap().disciplina, Some(disciplina_1.clone()));
+        assert_eq!(schedule.get_from_str("6M12").unwrap().disciplina, Some(disciplina_1))
+    }
+
+    #[test]
+    fn verify_availability_should_return_discipline() {
+        let mut schedule = Schedule::new();
+
+        let disciplina_1 = Disciplina::new_stringify("Fundamentos mamáticos da computação I", "246M12").unwrap();
+
+        schedule.insert(disciplina_1.clone()).unwrap();
+
+        assert_eq!(schedule.verify_availability(&disciplina_1), DisciplineWasFound::DisciplineFound(disciplina_1.clone()));
     }
 
     #[test]
     fn insert_and_remove_from_schedule_should_not_have_discipline() {
         let mut schedule = Schedule::new();
 
-        let disciplina_1 =
-            Disciplina::new_stringify("Fundamentos mamáticos da computação I", "246M12").unwrap();
+        let disciplina_1 = Disciplina::new_stringify("Fundamentos mamáticos da computação I", "246M12").unwrap();
 
         assert_eq!(schedule.insert(disciplina_1.clone()), Ok(()));
         assert_eq!(schedule.remove(disciplina_1.clone()), Ok(()));
-
-        for &sigaa_time in &disciplina_1.sigaa_time {
-            assert_eq!(schedule.get(sigaa_time).unwrap(),)
-        }
     }
 }

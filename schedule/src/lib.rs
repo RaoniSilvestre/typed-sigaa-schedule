@@ -1,11 +1,12 @@
 use class::Disciplina;
+use serde::{Deserialize, Serialize};
 use stf::{SigaaTime, SigaaTimeErrors};
 
 /// Representa uma unidade de horário em um cronograma.
 ///
 /// Uma `ScheduleUnity` contém um horário específico (`SigaaTime`) e uma disciplina opcional
 /// associada a esse horário.
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct ScheduleUnity {
     /// O horário específico para esta unidade.
     pub horario: SigaaTime,
@@ -17,12 +18,13 @@ pub struct ScheduleUnity {
 ///
 /// O cronograma é uma coleção bidimensional de `ScheduleUnity`, onde cada `Vec` representa uma linha
 /// de horários.
+#[derive(Clone, PartialEq, Serialize, Deserialize)]
 pub struct Schedule(Vec<Vec<ScheduleUnity>>);
 
 /// Erros que podem ocorrer ao trabalhar com cronogramas.
 ///
 /// Estes erros cobrem conflitos entre disciplinas, horários não encontrados e erros relacionados ao `SigaaTime`.
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Serialize, Deserialize)]
 pub enum ScheduleError {
     /// Disciplina conflitante com outra disciplina.
     ConflictingDisciplines(Disciplina, Disciplina),
@@ -37,6 +39,7 @@ pub enum ScheduleError {
 /// Resultado de busca de disciplina.
 ///
 /// Indica se a disciplina foi encontrada ou não.
+#[derive(Debug, PartialEq, Serialize, Deserialize)]
 pub enum DisciplineWasFound {
     /// Disciplina encontrada com sucesso.
     DisciplineFound(Disciplina),

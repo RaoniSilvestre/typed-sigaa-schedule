@@ -71,8 +71,8 @@ impl Schedule {
     pub fn verify_availability(&self, disciplina: &Disciplina) -> DisciplineWasFound {
         if let Some(sigaa_time) = &disciplina.sigaa_time.first() {
             match &self.get(sigaa_time).disciplina {
-                Some(found_discipline) => DisciplineFound(found_discipline.clone()),
-                None => DisciplineNotFound,
+                Some(found_discipline) => return DisciplineFound(found_discipline.clone()),
+                None => return DisciplineNotFound,
             };
         }
 

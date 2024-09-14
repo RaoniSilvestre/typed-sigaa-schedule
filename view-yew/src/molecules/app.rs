@@ -1,3 +1,4 @@
+use super::super::atoms::github_link::GithubLink;
 use super::super::atoms::total_hour::TotalHourComponent;
 use super::discipline_list::DisciplineListComponent;
 use super::form::*;
@@ -68,7 +69,8 @@ pub fn App() -> Html {
         <div class="relative flex flex-col space-y-4" >
             <FormComponent on_submit={on_form_submit}/>
             <TotalHourComponent total_hours={*total_hours}/>
-        </div>
+            <GithubLink />
+            </div>
         <div class="w-full">
             <ScheduleComponent schedule={(*schedule).clone()} />
             <DisciplineListComponent discipline_list={discipline_list} on_remove={remove_discipline_from_schedule}/>
